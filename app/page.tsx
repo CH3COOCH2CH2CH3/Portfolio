@@ -17,7 +17,7 @@ const skills = [
   },
   {
     title: "Automation & Development",
-    body: "Python, Bash, REST APIs, JSON processing, SOAR workflows, restricted response helper services.",
+    body: "Python, Bash, REST APIs, JSON processing, SOAR workflows, restricted response helpers and evidence-safe automation.",
   },
 ];
 
@@ -139,7 +139,7 @@ export default function HomePage() {
                 <h2>Mini SOC for Enterprise Web & Endpoint Security</h2>
                 <p className="lead">
                   A self-hosted lab integrating Wazuh SIEM, inline Suricata IPS, NGINX, nftables,
-                  endpoint telemetry, Shuffle SOAR and restricted response APIs to build traceable
+                  endpoint telemetry, Shuffle SOAR, restricted response APIs, backup recovery and evidence-safe LLM enrichment to build traceable
                   Detect → Analyze → Respond workflows.
                 </p>
                 <div className="role-box">

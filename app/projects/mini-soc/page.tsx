@@ -17,6 +17,7 @@ const contributionGroups = [
   ["Gateway defense", "NGINX reverse proxy, TLS termination, nftables, NFQUEUE, inline Suricata IPS and service exposure controls."],
   ["Response engineering", "Shuffle workflows, response policy, SOC Gateway Block API, protected-source policy, TTL containment and Telegram reporting."],
   ["Endpoint monitoring", "auditd execution context, Linux FIM, Wazuh Active Response dispatch and verification at the target Agent."],
+  ["Operational hardening", "Backup Server restore staging, append-only Restic repositories, sanitized evidence handling and configuration review."],
   ["Validation", "End-to-end testing for PB-01, PB-02, PB-03 and protected-source bypass behavior."],
 ];
 
@@ -239,6 +240,48 @@ export default function MiniSocPage() {
           </div>
         </section>
 
+        <section className="section-pad border-top">
+          <div className="container">
+            <div className="section-heading-row">
+              <div className="section-label">07 / Operational Foundation</div>
+              <p>What makes the detection demo reviewable beyond a workflow screenshot.</p>
+            </div>
+            <div className="ops-grid">
+              <article className="ops-card">
+                <span>01 / Backup</span>
+                <h3>Recoverability is part of security.</h3>
+                <p>
+                  The lab uses separate encrypted Restic repositories for SOC, Web and Shuffle, with append-only
+                  storage, staged restore and checksum review. The design is honest about its current gap: the
+                  repositories still share one Backup VM, so a second physical copy and Web/Shuffle staging restores
+                  remain follow-up work.
+                </p>
+              </article>
+              <article className="ops-card">
+                <span>02 / Dataset</span>
+                <h3>Evidence has lineage and limits.</h3>
+                <p>
+                  The processed SOC dataset records 200,000 sampled events across FortiGate, web, SSH and unparsed
+                  sources. The public sample keeps schema, confidence and evidence while removing operational
+                  addresses and raw messages. Heuristic labels are not forensic ground truth.
+                </p>
+              </article>
+              <article className="ops-card">
+                <span>03 / LLM boundary</span>
+                <h3>AI assists analysis; it does not decide containment.</h3>
+                <p>
+                  The LLM agent, API and dashboard are documented as an enrichment layer. Credentials and callbacks
+                  are runtime-only, Wazuh remains the detection source, and AI output cannot independently change
+                  severity, disposition or response policy.
+                </p>
+              </article>
+            </div>
+            <div className="decision-note ops-note">
+              <strong>Publication rule:</strong> the public repository contains sanitized configuration fragments and
+              fixtures only—not production IPs, credentials, JWTs, certificate keys, raw backup logs or live API URLs.
+            </div>
+          </div>
+        </section>
         <section className="section-pad border-top safe-automation-section">
           <div className="container split-section">
             <div className="section-label">08 / Safe Automation</div>

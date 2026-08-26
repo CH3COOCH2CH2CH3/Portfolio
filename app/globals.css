@@ -307,3 +307,10 @@ p { color: var(--muted); }
 #contact {
   scroll-margin-top: 90px;
 }
+.ops-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+.ops-card { min-height: 250px; padding: 24px; border: 1px solid var(--line); border-radius: 14px; background: linear-gradient(145deg, rgba(99,213,255,.045), rgba(255,255,255,.012)); }
+.ops-card > span { color: var(--accent); font: 11px "SFMono-Regular", Consolas, monospace; letter-spacing: .08em; text-transform: uppercase; }
+.ops-card h3 { margin: 42px 0 10px; font-size: 23px; }
+.ops-card p { margin-bottom: 0; font-size: 14px; }
+.ops-note { margin-top: 18px; }
+@media (max-width: 980px) { .ops-grid { grid-template-columns: 1fr; } .ops-card { min-height: auto; } }
