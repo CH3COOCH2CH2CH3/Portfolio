@@ -52,6 +52,7 @@ export default function HomePage() {
                 <span>HUFLIT</span>
                 <span>Cybersecurity</span>
                 <span>Blue Team / SOC</span>
+                <span>SoICT 2026 · Accepted paper</span>
               </div>
             </div>
 
@@ -72,6 +73,30 @@ export default function HomePage() {
               <div className="panel-foot">
                 <span>Detect</span><span>Analyze</span><span>Respond</span><span>Verify</span>
               </div>
+            </aside>
+          </div>
+        </section>
+
+        <section id="research" className="section-pad border-top research-section">
+          <div className="container research-grid">
+            <div>
+              <div className="section-label">Research / Accepted Paper</div>
+              <div className="research-status">SoICT 2026 · Accepted · Oral presentation</div>
+              <h2>A Policy-Controlled Multi-Domain SOC: Architecture and Evidence-Based Security-Boundary Validation</h2>
+              <p className="lead">
+                Accepted on 18 October 2026 for an oral presentation and inclusion in the SoICT 2026 proceedings.
+                The research examines security boundaries in a policy-controlled, multi-domain SOC.
+                Acceptance is confirmed; publication, DOI and a proceedings link are not yet claimed.
+              </p>
+              <Link className="text-link" href="/projects/mini-soc#publication">Research context and implementation scope →</Link>
+            </div>
+            <aside className="publication-panel" aria-label="Accepted paper details">
+              <span className="publication-panel-eyebrow">Publication record</span>
+              <div className="publication-field"><span>Venue</span><strong>SoICT 2026</strong></div>
+              <div className="publication-field"><span>Paper ID</span><strong>3856</strong></div>
+              <div className="publication-field"><span>Authors</span><strong>Duc Manh Bui · Thanh Tien Cao · Lam Cao Nguyen</strong></div>
+              <div className="publication-field"><span>Status</span><strong>Accepted for oral presentation and proceedings</strong></div>
+              <p className="publication-disclaimer">As of October 2026, this is an acceptance announcement—not a published DOI record.</p>
             </aside>
           </div>
         </section>
@@ -138,8 +163,8 @@ export default function HomePage() {
               <div>
                 <h2>Mini SOC for Enterprise Web & Endpoint Security</h2>
                 <p className="lead">
-                  A self-hosted lab integrating Wazuh SIEM, inline Suricata IPS, NGINX, nftables,
-                  endpoint telemetry, Shuffle SOAR, restricted response APIs, backup recovery and evidence-safe LLM enrichment to build traceable
+                  A policy-controlled, multi-domain SOC research lab combining Wazuh SIEM, inline Suricata IPS, NGINX, nftables,
+                  endpoint telemetry, Shuffle SOAR, restricted response APIs and supporting SDN/LLM research modules to build traceable
                   Detect → Analyze → Respond workflows.
                 </p>
                 <div className="role-box">
@@ -147,8 +172,8 @@ export default function HomePage() {
                   <strong>SOC & Security Engineering</strong>
                   <p>
                     Responsible for the SOC/security-engineering portion: SIEM, gateway security,
-                    inline IPS, detection rules, endpoint monitoring, SOAR workflows, response APIs,
-                    safe-automation policy and E2E testing. SDN and LLM implementation were developed by my teammate.
+                    inline IPS, detection rules, endpoint monitoring, SOAR workflows and restricted response APIs.
+                    My teammate led the SDN implementation and core LLM work; I also supported LLM integration.
                   </p>
                 </div>
                 <Link className="text-link" href="/projects/mini-soc">Open full technical case study →</Link>
