@@ -11,6 +11,7 @@ export function Nav() {
         <nav className="nav-links" aria-label="Primary navigation">
           <Link href="/#about">About</Link>
           <Link href="/#skills">Skills</Link>
+          <Link href="/#research">Research</Link>
           <Link href="/projects/mini-soc">Case Study</Link>
           <Link href="/#contact">Contact</Link>
         </nav>
