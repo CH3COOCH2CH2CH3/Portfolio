@@ -111,9 +111,14 @@ export default function MiniSocPage() {
             <ArchitectureFlow />
             <div className="evidence-grid compact-top">
               <EvidenceImage
-                src="/evidence/architecture.jpg"
+                src="/evidence/research-architecture.svg"
                 alt="Graduation capstone architecture diagram"
-                caption="Evidence 01 — Architecture diagram from the capstone report."
+                caption="Evidence 01 — Adapted joint capstone architecture; SDN and core LLM components were teammate-led."
+              />
+              <EvidenceImage
+                src="/evidence/external-monitoring-flow.svg"
+                alt="Adapted external request and log monitoring flow"
+                caption="External monitoring diagram — conceptual traffic and telemetry paths, not packet-level test evidence."
               />
               <EvidenceImage
                 src="/evidence/wazuh-dashboard.jpg"
@@ -185,7 +190,7 @@ export default function MiniSocPage() {
                 <div className="mini-flow">Repeated 404 → Wazuh 110152 → Shuffle → Gateway API → nftables TTL → Telegram</div>
                 <div className="decision-note"><strong>Engineering decision:</strong> one 404 never triggers containment.</div>
               </div>
-              <EvidenceImage src="/evidence/pb01-flow.jpg" alt="PB-01 workflow diagram" caption="PB-01 — end-to-end response flow from the report." />
+              <EvidenceImage src="/evidence/pb01-policy-flow.svg" alt="PB-01 workflow diagram" caption="PB-01 — adapted design flow from Wazuh correlation to a policy-bound response request." />
             </div>
             <SanitizedOutput
               title="PB-01 / Gateway enforcement"
@@ -208,7 +213,7 @@ export default function MiniSocPage() {
               <div className="state-chip">Prevented → Contained</div>
             </div>
             <div className="case-study-grid reverse">
-              <EvidenceImage src="/evidence/pb02-flow.jpg" alt="PB-02 workflow diagram" caption="PB-02 — Suricata prevention followed by SOAR containment." />
+              <EvidenceImage src="/evidence/pb02-inline-ips-flow.svg" alt="PB-02 workflow diagram" caption="PB-02 — adapted design of inline IPS prevention and separate time-bounded containment." />
               <div>
                 <h3>Prevention is not the same as containment</h3>
                 <p>
@@ -251,7 +256,7 @@ export default function MiniSocPage() {
                 <div className="mini-flow">auditd → Wazuh → Shuffle → Wazuh API → target Agent → audit script → endpoint evidence</div>
                 <div className="decision-note"><strong>Current boundary:</strong> audit-only. The workflow does not kill a process, isolate the host, modify its firewall or lock an account.</div>
               </div>
-              <EvidenceImage src="/evidence/pb03-flow.jpg" alt="PB-03 workflow diagram" caption="PB-03 — Active Response is verified at the target endpoint." />
+              <EvidenceImage src="/evidence/pb03-audit-response-flow.svg" alt="PB-03 workflow diagram" caption="PB-03 — adapted audit-only dispatch flow; actual endpoint execution requires separate evidence." />
             </div>
             <SanitizedOutput
               title="PB-03 / Audit-only response scope"
@@ -354,9 +359,9 @@ export default function MiniSocPage() {
             </div>
             <div className="evidence-grid">
               <EvidenceImage src="/evidence/shuffle-overview.jpg" alt="Shuffle workflow overview" caption="Evidence 03 — Shuffle workflow overview used for alert routing." />
-              <EvidenceImage src="/evidence/pb01-flow.jpg" alt="PB-01 flow" caption="Evidence 04 — PB-01 correlation-to-containment flow." />
-              <EvidenceImage src="/evidence/pb02-flow.jpg" alt="PB-02 flow" caption="Evidence 05 — PB-02 prevention and containment flow." />
-              <EvidenceImage src="/evidence/pb03-flow.jpg" alt="PB-03 flow" caption="Evidence 06 — PB-03 endpoint audit-response flow." />
+              <EvidenceImage src="/evidence/pb01-policy-flow.svg" alt="PB-01 flow" caption="Evidence 04 — PB-01 selected rule-to-policy diagram." />
+              <EvidenceImage src="/evidence/pb02-inline-ips-flow.svg" alt="PB-02 flow" caption="Evidence 05 — PB-02 inline IPS and SOAR action diagram." />
+              <EvidenceImage src="/evidence/pb03-audit-response-flow.svg" alt="PB-03 flow" caption="Evidence 06 — PB-03 intended audit-only response path." />
             </div>
           </div>
         </section>
