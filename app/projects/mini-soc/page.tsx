@@ -8,7 +8,7 @@ import { Nav } from "@/components/Nav";
 export const metadata: Metadata = {
   title: "Mini SOC Case Study",
   description:
-    "Technical case study of a graduation capstone covering SIEM, inline IPS, detection engineering, SOAR, response APIs, endpoint monitoring and safe automation.",
+    "Research-linked case study of a multi-domain SOC graduation capstone covering SIEM, inline IPS, detection engineering, SOAR, response APIs and security boundaries.",
 };
 
 const contributionGroups = [
@@ -18,7 +18,8 @@ const contributionGroups = [
   ["Response engineering", "Shuffle workflows, response policy, SOC Gateway Block API, protected-source policy, TTL containment and Telegram reporting."],
   ["Endpoint monitoring", "auditd execution context, Linux FIM, Wazuh Active Response dispatch and verification at the target Agent."],
   ["Operational hardening", "Backup Server restore staging, append-only Restic repositories, sanitized evidence handling and configuration review."],
-  ["Validation", "End-to-end testing for PB-01, PB-02, PB-03 and protected-source bypass behavior."],
+  ["Validation", "Scenario-scoped testing for PB-01, PB-02, PB-03 and protected-source bypass behavior; broader response-contract evaluation is not claimed here."],
+  ["LLM integration support", "Supported integration of LLM-based alert enrichment within the SOC research workflow. Core LLM development was teammate-led."],
 ];
 
 export default function MiniSocPage() {
@@ -32,20 +33,47 @@ export default function MiniSocPage() {
             <div className="case-eyebrow">Graduation Capstone · Team of 2 · 2026</div>
             <h1>Mini SOC for Enterprise Web & Endpoint Security</h1>
             <p className="case-intro">
-              A controlled research lab connecting network, web, endpoint, SIEM and SOAR layers so a
-              security event can be traced from telemetry to detection, policy decision, enforcement and verification.
+              A controlled, multi-domain SOC research lab connecting network, web, endpoint, SIEM and SOAR layers.
+              It explores explicit policy decisions, bounded enforcement and evidence-based security boundaries.
             </p>
             <div className="case-meta-grid">
               <div><span>My role</span><strong>SOC & Security Engineering</strong></div>
               <div><span>Focus</span><strong>Blue Team / Detection / Response</strong></div>
               <div><span>Environment</span><strong>Self-hosted lab</strong></div>
-              <div><span>Status</span><strong>Validated within defined scope</strong></div>
+              <div><span>Status</span><strong>Research prototype · scope-limited evaluation</strong></div>
             </div>
             <div className="scope-callout">
               <strong>Contribution boundary.</strong> This was a two-person capstone. I implemented the SOC and
-              security-engineering portion described on this page. SDN implementation and LLM integration were
-              developed by my teammate and are intentionally not claimed as my work.
+              security-engineering portion described on this page. My teammate implemented the SDN component and
+              led core LLM development. I also contributed supporting work to the LLM integration.
             </div>
+          </div>
+        </section>
+
+        <section id="publication" className="section-pad border-top publication-section">
+          <div className="container research-grid">
+            <div>
+              <div className="section-label">Research / Publication</div>
+              <div className="research-status">SoICT 2026 · Accepted · Oral presentation</div>
+              <h2>A Policy-Controlled Multi-Domain SOC: Architecture and Evidence-Based Security-Boundary Validation</h2>
+              <p className="lead">
+                Paper ID 3856 was accepted for an oral presentation and publication in the SoICT 2026 proceedings,
+                according to the acceptance notification dated 18 October 2026.
+              </p>
+              <p>
+                The accepted research describes the wider multi-domain architecture. This public case study focuses
+                on my SOC and security-engineering contributions and does not attribute teammate-owned SDN implementation
+                or core LLM development to me.
+              </p>
+              <p className="publication-disclaimer">Proceedings publication and DOI are pending confirmation. No unpublished reviewer-test claims are included here.</p>
+            </div>
+            <aside className="publication-panel">
+              <span className="publication-panel-eyebrow">Accepted research</span>
+              <div className="publication-field"><span>Venue</span><strong>SoICT 2026</strong></div>
+              <div className="publication-field"><span>Paper ID</span><strong>3856</strong></div>
+              <div className="publication-field"><span>Authors</span><strong>Duc Manh Bui · Thanh Tien Cao · Lam Cao Nguyen</strong></div>
+              <div className="publication-field"><span>Decision</span><strong>Accepted for oral presentation</strong></div>
+            </aside>
           </div>
         </section>
 
@@ -112,9 +140,9 @@ export default function MiniSocPage() {
               ))}
             </div>
             <div className="not-mine">
-              <span>Not claimed as my implementation</span>
-              <strong>SDN: Mininet / OVS / Ryu / Flow-Mod</strong>
-              <strong>LLM: DeepSeek processing and LLM dashboard integration</strong>
+              <span>Contribution and ownership boundaries</span>
+              <strong>SDN: Mininet / OVS / Ryu / Flow-Mod — teammate implementation</strong>
+              <strong>LLM: core processing and dedicated dashboard — teammate-led; I supported integration</strong>
             </div>
           </div>
         </section>
@@ -217,8 +245,8 @@ export default function MiniSocPage() {
                 <h3>Endpoint evidence closes the visibility gap</h3>
                 <p>
                   auditd records executable, arguments, user identity, PID, PPID and privilege context. Selected
-                  Wazuh rules identify high-confidence command patterns. Shuffle then dispatches a Wazuh Active
-                  Response to the target Agent and the script execution is verified on the endpoint itself.
+                  Wazuh rules identify selected command patterns. Shuffle can request a Wazuh Active Response
+                  audit dispatch to the target Agent; dispatch acceptance must not be mistaken for endpoint execution evidence.
                 </p>
                 <div className="mini-flow">auditd → Wazuh → Shuffle → Wazuh API → target Agent → audit script → endpoint evidence</div>
                 <div className="decision-note"><strong>Current boundary:</strong> audit-only. The workflow does not kill a process, isolate the host, modify its firewall or lock an account.</div>
@@ -226,7 +254,7 @@ export default function MiniSocPage() {
               <EvidenceImage src="/evidence/pb03-flow.jpg" alt="PB-03 workflow diagram" caption="PB-03 — Active Response is verified at the target endpoint." />
             </div>
             <SanitizedOutput
-              title="PB-03 / Endpoint verification"
+              title="PB-03 / Audit-only response scope"
               status="bounded"
               rows={[
                 ["rule_id", "110120"],
@@ -235,6 +263,7 @@ export default function MiniSocPage() {
                 ["executable", "/usr/bin/bash"],
                 ["program", "active-response/bin/soc-ar-audit.sh"],
                 ["containment", "not_performed"],
+                ["verification", "requires endpoint-side evidence"],
               ]}
             />
           </div>
@@ -270,9 +299,9 @@ export default function MiniSocPage() {
                 <span>03 / LLM boundary</span>
                 <h3>AI assists analysis; it does not decide containment.</h3>
                 <p>
-                  The LLM agent, API and dashboard are documented as an enrichment layer. Credentials and callbacks
-                  are runtime-only, Wazuh remains the detection source, and AI output cannot independently change
-                  severity, disposition or response policy.
+                  The LLM agent, API and dashboard are designed as an enrichment layer. Credentials and callbacks
+                  are runtime-only, Wazuh remains the detection source, and AI output should not independently change
+                  severity, disposition or response policy without explicit non-LLM controls.
                 </p>
               </article>
             </div>
