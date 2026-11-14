@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
-const HOME_SECTIONS = ["about", "skills", "contact"] as const;
+const HOME_SECTIONS = ["research", "about", "skills", "contact"] as const;
 
 /**
  * Sticky site header with scroll progress meter, active section indicator,
@@ -112,7 +112,6 @@ export function Nav() {
           <span className="brand-mark">MD</span>
           <span>Mạnh Đức</span>
         </Link>
-<<<<<<< HEAD
 
         <nav
           id="primary-navigation"
@@ -134,6 +133,13 @@ export function Nav() {
             Skills
           </Link>
           <Link
+            href="/#research"
+            onClick={closeMenu}
+            aria-current={pathname === "/" && activeHash === "#research" ? "location" : undefined}
+          >
+            Research
+          </Link>
+          <Link
             href="/projects/mini-soc"
             onClick={closeMenu}
             aria-current={pathname === "/projects/mini-soc" ? "page" : undefined}
@@ -147,14 +153,6 @@ export function Nav() {
           >
             Contact
           </Link>
-=======
-        <nav className="nav-links" aria-label="Primary navigation">
-          <Link href="/#about">About</Link>
-          <Link href="/#skills">Skills</Link>
-          <Link href="/#research">Research</Link>
-          <Link href="/projects/mini-soc">Case Study</Link>
-          <Link href="/#contact">Contact</Link>
->>>>>>> 2c92c10ad66c0062a52dab88c6826db7fdc188b5
         </nav>
 
         <button

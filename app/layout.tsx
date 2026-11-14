@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter, JetBrains_Mono } from "next/font/google";
+import { CyberStageCanvas } from "@/components/CyberStageCanvas";
 import { MotionEffects } from "@/components/MotionEffects";
 import "./globals.css";
 
@@ -40,6 +41,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="en" className={`${inter.variable} ${jetbrainsMono.variable}`}>
       <body>
+        <CyberStageCanvas />
         <MotionEffects />
         {children}
       </body>

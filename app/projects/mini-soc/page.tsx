@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ArchitectureFlow } from "@/components/ArchitectureFlow";
-import { CaseStudyRail } from "@/components/CaseStudyRail";
 import { EvidenceImage, SanitizedOutput } from "@/components/Evidence";
 import { Footer } from "@/components/Footer";
 import { Nav } from "@/components/Nav";
@@ -28,19 +27,18 @@ export default function MiniSocPage() {
   return (
     <>
       <Nav />
-      <CaseStudyRail />
-      <main>
+      <main id="main">
         <section className="case-hero section-pad">
           <div className="container">
             <Link className="back-link" href="/">← Portfolio</Link>
             <div className="case-eyebrow">Graduation Capstone · Team of 2 · 2026</div>
-            <h1>Mini SOC for Enterprise Web & Endpoint Security</h1>
+            <h1>Mini SOC for Enterprise Web &amp; Endpoint Security</h1>
             <p className="case-intro">
               A controlled, multi-domain SOC research lab connecting network, web, endpoint, SIEM and SOAR layers.
               It explores explicit policy decisions, bounded enforcement and evidence-based security boundaries.
             </p>
             <div className="case-meta-grid">
-              <div><span>My role</span><strong>SOC & Security Engineering</strong></div>
+              <div><span>My role</span><strong>SOC &amp; Security Engineering</strong></div>
               <div><span>Focus</span><strong>Blue Team / Detection / Response</strong></div>
               <div><span>Environment</span><strong>Self-hosted lab</strong></div>
               <div><span>Status</span><strong>Research prototype · scope-limited evaluation</strong></div>
@@ -53,14 +51,13 @@ export default function MiniSocPage() {
           </div>
         </section>
 
-<<<<<<< HEAD
-        <section id="problem" className="section-pad border-top case-anchor">
-=======
-        <section id="publication" className="section-pad border-top publication-section">
-          <div className="container research-grid">
+        <section id="publication" className="section-pad border-top publication-section case-anchor">
+          <div className="container research-grid ks-inview">
             <div>
               <div className="section-label">Research / Publication</div>
-              <div className="research-status">SoICT 2026 · Accepted · Oral presentation</div>
+              <div className="research-status">
+                <i className="ks-status-dot" /> SoICT 2026 · Accepted · Oral presentation
+              </div>
               <h2>A Policy-Controlled Multi-Domain SOC: Architecture and Evidence-Based Security-Boundary Validation</h2>
               <p className="lead">
                 Paper ID 3856 was accepted for an oral presentation and publication in the SoICT 2026 proceedings,
@@ -71,9 +68,11 @@ export default function MiniSocPage() {
                 on my SOC and security-engineering contributions and does not attribute teammate-owned SDN implementation
                 or core LLM development to me.
               </p>
-              <p className="publication-disclaimer">Proceedings publication and DOI are pending confirmation. No unpublished reviewer-test claims are included here.</p>
+              <p className="publication-disclaimer">
+                Proceedings publication and DOI are pending confirmation. No unpublished reviewer-test claims are included here.
+              </p>
             </div>
-            <aside className="publication-panel">
+            <aside className="publication-panel" data-spotlight>
               <span className="publication-panel-eyebrow">Accepted research</span>
               <div className="publication-field"><span>Venue</span><strong>SoICT 2026</strong></div>
               <div className="publication-field"><span>Paper ID</span><strong>3856</strong></div>
@@ -83,8 +82,7 @@ export default function MiniSocPage() {
           </div>
         </section>
 
-        <section className="section-pad border-top">
->>>>>>> 2c92c10ad66c0062a52dab88c6826db7fdc188b5
+        <section id="problem" className="section-pad border-top case-anchor">
           <div className="container split-section">
             <div className="section-label">01 / Problem</div>
             <div className="reveal-item">
@@ -220,13 +218,8 @@ export default function MiniSocPage() {
               <div className="state-chip">Prevented → Contained</div>
             </div>
             <div className="case-study-grid reverse">
-<<<<<<< HEAD
-              <EvidenceImage src="/evidence/pb02-flow.jpg" alt="PB-02 workflow diagram" caption="PB-02 — Suricata prevention followed by SOAR containment." />
-              <div className="reveal-item">
-=======
               <EvidenceImage src="/evidence/pb02-inline-ips-flow.svg" alt="PB-02 workflow diagram" caption="PB-02 — adapted design of inline IPS prevention and separate time-bounded containment." />
-              <div>
->>>>>>> 2c92c10ad66c0062a52dab88c6826db7fdc188b5
+              <div className="reveal-item">
                 <h3>Prevention is not the same as containment</h3>
                 <p>
                   Suricata operates inline through NFQUEUE and blocks selected exploit signatures. Wazuh then
@@ -404,7 +397,7 @@ export default function MiniSocPage() {
             </div>
             <div className="project-cta">
               <div><span>Repository</span><strong>mini-soc-enterprise-web-lab</strong></div>
-              <a className="button primary" href="https://github.com/CH3COOCH2CH2CH3/mini-soc-enterprise-web-lab" target="_blank" rel="noreferrer">Open GitHub repository</a>
+              <a className="button primary" data-magnetic href="https://github.com/CH3COOCH2CH2CH3/mini-soc-enterprise-web-lab" target="_blank" rel="noreferrer">Open GitHub repository</a>
             </div>
           </div>
         </section>
