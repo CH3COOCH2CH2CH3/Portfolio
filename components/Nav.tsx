@@ -112,6 +112,7 @@ export function Nav() {
           <span className="brand-mark">MD</span>
           <span>Mạnh Đức</span>
         </Link>
+<<<<<<< HEAD
 
         <nav
           id="primary-navigation"
@@ -146,6 +147,14 @@ export function Nav() {
           >
             Contact
           </Link>
+=======
+        <nav className="nav-links" aria-label="Primary navigation">
+          <Link href="/#about">About</Link>
+          <Link href="/#skills">Skills</Link>
+          <Link href="/#research">Research</Link>
+          <Link href="/projects/mini-soc">Case Study</Link>
+          <Link href="/#contact">Contact</Link>
+>>>>>>> 2c92c10ad66c0062a52dab88c6826db7fdc188b5
         </nav>
 
         <button

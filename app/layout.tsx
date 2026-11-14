@@ -21,7 +21,7 @@ export const metadata: Metadata = {
     template: "%s — Mạnh Đức",
   },
   description:
-    "Cybersecurity portfolio focused on Blue Team security, SOC operations, detection engineering, network defense, and controlled incident response automation.",
+    "Mạnh Đức’s Blue Team and SOC engineering portfolio, featuring a SoICT 2026 accepted research paper on policy-controlled multi-domain SOC security boundaries.",
   keywords: [
     "Cybersecurity",
     "Blue Team",
@@ -31,6 +31,8 @@ export const metadata: Metadata = {
     "Detection Engineering",
     "SOAR",
     "Linux Security",
+    "SoICT 2026",
+    "Security Boundary Validation",
   ],
 };
 
