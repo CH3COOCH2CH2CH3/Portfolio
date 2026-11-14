@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ArchitectureFlow } from "@/components/ArchitectureFlow";
+import { CaseStudyRail } from "@/components/CaseStudyRail";
 import { EvidenceImage, SanitizedOutput } from "@/components/Evidence";
 import { Footer } from "@/components/Footer";
 import { Nav } from "@/components/Nav";
+import { PolicyForkInteractive } from "@/components/PolicyForkInteractive";
 
 export const metadata: Metadata = {
   title: "Mini SOC Case Study",
@@ -25,6 +27,7 @@ export default function MiniSocPage() {
   return (
     <>
       <Nav />
+      <CaseStudyRail />
       <main>
         <section className="case-hero section-pad">
           <div className="container">
@@ -49,10 +52,10 @@ export default function MiniSocPage() {
           </div>
         </section>
 
-        <section className="section-pad border-top">
+        <section id="problem" className="section-pad border-top case-anchor">
           <div className="container split-section">
             <div className="section-label">01 / Problem</div>
-            <div>
+            <div className="reveal-item">
               <h2>One alert source is not enough to explain an incident.</h2>
               <p className="lead">
                 The project studies a small SOC architecture where Internet-facing traffic, reverse-proxy activity,
@@ -74,14 +77,14 @@ export default function MiniSocPage() {
           </div>
         </section>
 
-        <section className="section-pad border-top">
+        <section id="architecture" className="section-pad border-top case-anchor">
           <div className="container">
             <div className="section-heading-row">
               <div className="section-label">02 / Architecture</div>
-              <p>Operational flow for the portion I implemented.</p>
+              <p>Operational flow for the portion I implemented. Select any node to inspect its role.</p>
             </div>
             <ArchitectureFlow />
-            <div className="evidence-grid compact-top">
+            <div className="evidence-grid compact-top reveal-group">
               <EvidenceImage
                 src="/evidence/architecture.jpg"
                 alt="Graduation capstone architecture diagram"
@@ -96,15 +99,15 @@ export default function MiniSocPage() {
           </div>
         </section>
 
-        <section className="section-pad border-top">
+        <section id="contributions" className="section-pad border-top case-anchor">
           <div className="container">
             <div className="section-heading-row">
               <div className="section-label">03 / My Contributions</div>
               <p>Scope stated explicitly to keep team ownership auditable.</p>
             </div>
-            <div className="contribution-grid">
+            <div className="contribution-grid reveal-group">
               {contributionGroups.map(([title, body], index) => (
-                <article key={title} className="contribution-card">
+                <article key={title} className="contribution-card reveal-item" data-spotlight>
                   <span>{String(index + 1).padStart(2, "0")}</span>
                   <h3>{title}</h3>
                   <p>{body}</p>
@@ -119,10 +122,10 @@ export default function MiniSocPage() {
           </div>
         </section>
 
-        <section className="section-pad border-top">
+        <section id="detection" className="section-pad border-top case-anchor">
           <div className="container split-section">
             <div className="section-label">04 / Detection Engineering</div>
-            <div>
+            <div className="reveal-item">
               <h2>Telemetry is separated from response-triggering detection.</h2>
               <p className="lead">
                 Low-level events establish context. Correlation and high-confidence rules narrow the signal.
@@ -140,14 +143,14 @@ export default function MiniSocPage() {
           </div>
         </section>
 
-        <section className="case-study section-pad border-top">
+        <section id="pb-01" className="case-study section-pad border-top case-anchor">
           <div className="container">
             <div className="case-study-head">
               <div><span>PB-01</span><h2>Web Reconnaissance</h2></div>
               <div className="state-chip">Detected → Contained</div>
             </div>
             <div className="case-study-grid">
-              <div>
+              <div className="reveal-item">
                 <h3>Why this detection exists</h3>
                 <p>
                   A single HTTP 404 is normal. Repeated requests to non-existent resources from the same source
@@ -173,7 +176,7 @@ export default function MiniSocPage() {
           </div>
         </section>
 
-        <section className="case-study section-pad border-top">
+        <section id="pb-02" className="case-study section-pad border-top case-anchor">
           <div className="container">
             <div className="case-study-head">
               <div><span>PB-02</span><h2>Web Exploitation</h2></div>
@@ -181,7 +184,7 @@ export default function MiniSocPage() {
             </div>
             <div className="case-study-grid reverse">
               <EvidenceImage src="/evidence/pb02-flow.jpg" alt="PB-02 workflow diagram" caption="PB-02 — Suricata prevention followed by SOAR containment." />
-              <div>
+              <div className="reveal-item">
                 <h3>Prevention is not the same as containment</h3>
                 <p>
                   Suricata operates inline through NFQUEUE and blocks selected exploit signatures. Wazuh then
@@ -206,14 +209,14 @@ export default function MiniSocPage() {
           </div>
         </section>
 
-        <section className="case-study section-pad border-top">
+        <section id="pb-03" className="case-study section-pad border-top case-anchor">
           <div className="container">
             <div className="case-study-head">
               <div><span>PB-03</span><h2>Suspicious Shell Execution</h2></div>
               <div className="state-chip bounded">Detected → Audit response</div>
             </div>
             <div className="case-study-grid">
-              <div>
+              <div className="reveal-item">
                 <h3>Endpoint evidence closes the visibility gap</h3>
                 <p>
                   auditd records executable, arguments, user identity, PID, PPID and privilege context. Selected
@@ -240,14 +243,14 @@ export default function MiniSocPage() {
           </div>
         </section>
 
-        <section className="section-pad border-top">
+        <section id="foundation" className="section-pad border-top case-anchor">
           <div className="container">
             <div className="section-heading-row">
               <div className="section-label">07 / Operational Foundation</div>
               <p>What makes the detection demo reviewable beyond a workflow screenshot.</p>
             </div>
-            <div className="ops-grid">
-              <article className="ops-card">
+            <div className="ops-grid reveal-group">
+              <article className="ops-card reveal-item" data-spotlight>
                 <span>01 / Backup</span>
                 <h3>Recoverability is part of security.</h3>
                 <p>
@@ -257,7 +260,7 @@ export default function MiniSocPage() {
                   remain follow-up work.
                 </p>
               </article>
-              <article className="ops-card">
+              <article className="ops-card reveal-item" data-spotlight>
                 <span>02 / Dataset</span>
                 <h3>Evidence has lineage and limits.</h3>
                 <p>
@@ -266,7 +269,7 @@ export default function MiniSocPage() {
                   addresses and raw messages. Heuristic labels are not forensic ground truth.
                 </p>
               </article>
-              <article className="ops-card">
+              <article className="ops-card reveal-item" data-spotlight>
                 <span>03 / LLM boundary</span>
                 <h3>AI assists analysis; it does not decide containment.</h3>
                 <p>
@@ -282,26 +285,18 @@ export default function MiniSocPage() {
             </div>
           </div>
         </section>
-        <section className="section-pad border-top safe-automation-section">
+
+        <section id="safe-automation" className="section-pad border-top safe-automation-section case-anchor">
           <div className="container split-section">
             <div className="section-label">08 / Safe Automation</div>
-            <div>
+            <div className="reveal-item">
               <h2>The response layer must be able to refuse a valid request.</h2>
               <p className="lead">
                 The Gateway API performs its own policy checks instead of blindly trusting the SOAR workflow.
                 Protected management and infrastructure sources return a valid <code>bypassed</code> decision and
                 are not inserted into the nftables block set.
               </p>
-              <div className="policy-fork">
-                <div><small>SOAR request</small><strong>Block source</strong></div>
-                <span>→</span>
-                <div><small>Gateway policy</small><strong>Validate + protected sources</strong></div>
-                <span>→</span>
-                <div className="fork-results">
-                  <strong>blocked</strong>
-                  <strong>bypassed</strong>
-                </div>
-              </div>
+              <PolicyForkInteractive />
               <SanitizedOutput
                 title="Protected-source validation"
                 status="bypassed"
@@ -317,13 +312,13 @@ export default function MiniSocPage() {
           </div>
         </section>
 
-        <section className="section-pad border-top">
+        <section id="evidence" className="section-pad border-top case-anchor">
           <div className="container">
             <div className="section-heading-row">
               <div className="section-label">09 / Orchestration Evidence</div>
               <p>Real implementation imagery retained only where it is safe to publish.</p>
             </div>
-            <div className="evidence-grid">
+            <div className="evidence-grid reveal-group">
               <EvidenceImage src="/evidence/shuffle-overview.jpg" alt="Shuffle workflow overview" caption="Evidence 03 — Shuffle workflow overview used for alert routing." />
               <EvidenceImage src="/evidence/pb01-flow.jpg" alt="PB-01 flow" caption="Evidence 04 — PB-01 correlation-to-containment flow." />
               <EvidenceImage src="/evidence/pb02-flow.jpg" alt="PB-02 flow" caption="Evidence 05 — PB-02 prevention and containment flow." />
@@ -332,10 +327,10 @@ export default function MiniSocPage() {
           </div>
         </section>
 
-        <section className="section-pad border-top limitations-section">
+        <section id="boundaries" className="section-pad border-top limitations-section case-anchor">
           <div className="container split-section">
             <div className="section-label">10 / Engineering Boundaries</div>
-            <div>
+            <div className="reveal-item">
               <h2>What this project does not prove.</h2>
               <div className="boundary-list">
                 <div><strong>Not production-certified</strong><p>It is a controlled research/lab deployment, not a production SOC.</p></div>
@@ -347,17 +342,22 @@ export default function MiniSocPage() {
           </div>
         </section>
 
-        <section className="section-pad border-top">
+        <section id="lessons" className="section-pad border-top case-anchor">
           <div className="container">
             <div className="section-heading-row"><div className="section-label">11 / Lessons</div><p>Engineering conclusions from the implementation.</p></div>
-            <div className="lessons-grid">
+            <div className="lessons-grid reveal-group">
               {[
                 ["Detection needs context", "A log event is not automatically an incident."],
                 ["Prevention ≠ containment", "Stopping one malicious request differs from restricting subsequent access."],
                 ["Automation needs safeguards", "Response APIs need validation, protected resources, traceability and rollback."],
                 ["HTTP 200 is not final evidence", "A response must be verified at the actual enforcement point."],
                 ["Boundaries reduce blast radius", "Bind addresses, firewall policy and restricted APIs matter as much as the workflow."],
-              ].map(([title, body]) => <article key={title}><h3>{title}</h3><p>{body}</p></article>)}
+              ].map(([title, body]) => (
+                <article className="reveal-item" data-spotlight key={title}>
+                  <h3>{title}</h3>
+                  <p>{body}</p>
+                </article>
+              ))}
             </div>
             <div className="project-cta">
               <div><span>Repository</span><strong>mini-soc-enterprise-web-lab</strong></div>

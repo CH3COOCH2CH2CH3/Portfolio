@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { Footer } from "@/components/Footer";
+import { HeroTopologyCanvas } from "@/components/HeroTopologyCanvas";
 import { Nav } from "@/components/Nav";
+import { SocIntro } from "@/components/SocIntro";
 
 const skills = [
   {
@@ -31,12 +33,15 @@ const buildPillars = [
 export default function HomePage() {
   return (
     <>
+      <SocIntro />
       <Nav />
       <main>
         <section className="hero section-pad">
           <div className="container hero-grid">
             <div>
-              <div className="eyebrow"><span className="live-dot" /> Final-year Cybersecurity Student</div>
+              <div className="eyebrow">
+                <span className="live-dot" /> Final-year Cybersecurity Student
+              </div>
               <h1>
                 Blue Team systems built around <span>detection, evidence, and controlled response.</span>
               </h1>
@@ -45,8 +50,17 @@ export default function HomePage() {
                 network defense, Linux security, and incident-response automation.
               </p>
               <div className="hero-actions">
-                <Link className="button primary" href="/projects/mini-soc">View featured case study</Link>
-                <a className="button secondary" href="https://github.com/CH3COOCH2CH2CH3/mini-soc-enterprise-web-lab" target="_blank" rel="noreferrer">GitHub repository</a>
+                <Link className="button primary" href="/projects/mini-soc">
+                  View featured case study
+                </Link>
+                <a
+                  className="button secondary"
+                  href="https://github.com/CH3COOCH2CH2CH3/mini-soc-enterprise-web-lab"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  GitHub repository
+                </a>
               </div>
               <div className="hero-meta">
                 <span>HUFLIT</span>
@@ -55,31 +69,37 @@ export default function HomePage() {
               </div>
             </div>
 
-            <aside className="hero-panel" aria-label="Security engineering focus">
-              <div className="panel-header">
-                <span>security_focus.yml</span>
-                <span className="panel-state">active</span>
-              </div>
-              <div className="code-lines">
-                <div><span>path:</span> blue_team / soc</div>
-                <div><span>telemetry:</span> network + web + endpoint</div>
-                <div><span>siem:</span> wazuh</div>
-                <div><span>ips:</span> suricata_inline</div>
-                <div><span>automation:</span> soar + restricted_api</div>
-                <div><span>principle:</span> evidence_before_action</div>
-              </div>
-              <div className="panel-rule" />
-              <div className="panel-foot">
-                <span>Detect</span><span>Analyze</span><span>Respond</span><span>Verify</span>
-              </div>
-            </aside>
+            <div className="hero-stage-wrap">
+              <HeroTopologyCanvas />
+              <aside className="hero-panel" data-spotlight aria-label="Security engineering focus">
+                <div className="panel-header">
+                  <span>security_focus.yml</span>
+                  <span className="panel-state">
+                    <i className="panel-state-dot" aria-hidden="true" />
+                    active
+                  </span>
+                </div>
+                <div className="code-lines">
+                  <div><span>path:</span> blue_team / soc</div>
+                  <div><span>telemetry:</span> network + web + endpoint</div>
+                  <div><span>siem:</span> wazuh</div>
+                  <div><span>ips:</span> suricata_inline</div>
+                  <div><span>automation:</span> soar + restricted_api</div>
+                  <div><span>principle:</span> evidence_before_action</div>
+                </div>
+                <div className="panel-rule" />
+                <div className="panel-foot">
+                  <span>Detect</span><span>Analyze</span><span>Respond</span><span>Verify</span>
+                </div>
+              </aside>
+            </div>
           </div>
         </section>
 
         <section id="about" className="section-pad border-top">
           <div className="container split-section">
             <div className="section-label">01 / About</div>
-            <div>
+            <div className="reveal-item">
               <h2>I prefer understanding the security system, not just the individual tool.</h2>
               <p className="lead">
                 My primary interests are SIEM, detection engineering, network security monitoring,
@@ -96,9 +116,9 @@ export default function HomePage() {
               <div className="section-label">02 / What I Build</div>
               <p>Security work framed as an operational chain.</p>
             </div>
-            <div className="pillar-grid">
+            <div className="pillar-grid reveal-group">
               {buildPillars.map(([num, title, body]) => (
-                <article className="pillar" key={title}>
+                <article className="pillar reveal-item" data-spotlight key={title}>
                   <span>{num}</span>
                   <h3>{title}</h3>
                   <p>{body}</p>
@@ -114,9 +134,9 @@ export default function HomePage() {
               <div className="section-label">03 / Technical Skills</div>
               <p>Grouped by how I use them in defensive engineering.</p>
             </div>
-            <div className="skills-grid">
+            <div className="skills-grid reveal-group">
               {skills.map((skill) => (
-                <article className="skill-card" key={skill.title}>
+                <article className="skill-card reveal-item" data-spotlight key={skill.title}>
                   <h3>{skill.title}</h3>
                   <p>{skill.body}</p>
                 </article>
@@ -135,7 +155,7 @@ export default function HomePage() {
           <div className="container">
             <div className="project-kicker">Featured Project · Graduation Capstone · Team of 2 · 2026</div>
             <div className="featured-grid">
-              <div>
+              <div className="reveal-item">
                 <h2>Mini SOC for Enterprise Web & Endpoint Security</h2>
                 <p className="lead">
                   A self-hosted lab integrating Wazuh SIEM, inline Suricata IPS, NGINX, nftables,
@@ -151,9 +171,11 @@ export default function HomePage() {
                     safe-automation policy and E2E testing. SDN and LLM implementation were developed by my teammate.
                   </p>
                 </div>
-                <Link className="text-link" href="/projects/mini-soc">Open full technical case study →</Link>
+                <Link className="text-link" href="/projects/mini-soc">
+                  Open full technical case study <span aria-hidden="true">→</span>
+                </Link>
               </div>
-              <div className="project-signal">
+              <div className="project-signal reveal-item" data-spotlight>
                 <div className="signal-row"><span>PB-01</span><strong>Web Recon</strong><em>Detected → Contained</em></div>
                 <div className="signal-row"><span>PB-02</span><strong>Web Exploit</strong><em>Prevented → Contained</em></div>
                 <div className="signal-row"><span>PB-03</span><strong>Suspicious Shell</strong><em>Detected → Audit response</em></div>
@@ -165,12 +187,12 @@ export default function HomePage() {
 
         <section className="section-pad border-top">
           <div className="container credentials-grid">
-            <div>
+            <div className="reveal-item">
               <div className="section-label">04 / Education</div>
               <h3>HUFLIT</h3>
               <p>Bachelor of Science in Cybersecurity · 2023 — Present</p>
             </div>
-            <div>
+            <div className="reveal-item">
               <div className="section-label">05 / Credentials</div>
               <ul className="clean-list">
                 <li>Google Network Security — 2026</li>
@@ -185,11 +207,11 @@ export default function HomePage() {
 
         <section id="contact" className="section-pad border-top contact-section">
           <div className="container contact-grid">
-            <div>
+            <div className="reveal-item">
               <div className="section-label">06 / Contact</div>
               <h2>Interested in Blue Team, SOC, detection engineering and defensive infrastructure.</h2>
             </div>
-            <div className="contact-actions">
+            <div className="contact-actions reveal-item">
               <a className="button primary" href="mailto:m134gold@gmail.com">m134gold@gmail.com</a>
               <a className="button secondary" href="https://github.com/CH3COOCH2CH2CH3" target="_blank" rel="noreferrer">GitHub profile</a>
             </div>
