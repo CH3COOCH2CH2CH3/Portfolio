@@ -29,24 +29,6 @@ const buildPillars = [
   ],
 ] as const;
 
-const tools = [
-  "Wazuh",
-  "Suricata",
-  "Shuffle",
-  "NGINX",
-  "nftables",
-  "auditd",
-  "Tailscale",
-  "Python",
-  "Bash",
-  "Git/GitHub",
-  "Docker",
-  "VMware",
-  "Ghidra",
-  "x64dbg",
-  "IDA",
-] as const;
-
 export default function HomePage() {
   return (
     <>
@@ -143,7 +125,7 @@ export default function HomePage() {
                   </div>
                   <div className="ks-mark-construct-inner">
                     <svg
-                      aria-label="Mạnh Đức Cyber Shield splitting into dual defense layers"
+                      aria-label="Mạnh Đức Cyber-Aegis Telemetry Core splitting into dual defense blades"
                       className="ks-motion-logo"
                       role="img"
                       viewBox="0 0 96 96"
@@ -151,32 +133,35 @@ export default function HomePage() {
                     >
                       <defs>
                         <linearGradient id="md-motion-gradient" x1="0" x2="1" y1="0" y2="1">
-                          <stop stopColor="#63d5ff" />
-                          <stop offset="0.55" stopColor="#78dfad" />
-                          <stop offset="1" stopColor="#dff9ff" />
+                          <stop offset="0%" stopColor="#dff9ff" />
+                          <stop offset="48%" stopColor="#63d5ff" />
+                          <stop offset="100%" stopColor="#78dfad" />
                         </linearGradient>
                         <linearGradient id="md-edge-stroke" x1="0" x2="1" y1="1" y2="0">
-                          <stop stopColor="#ffffff" stopOpacity="0.8" />
-                          <stop offset="1" stopColor="#63d5ff" stopOpacity="0.2" />
+                          <stop stopColor="#ffffff" stopOpacity="0.92" />
+                          <stop offset="1" stopColor="#63d5ff" stopOpacity="0.35" />
                         </linearGradient>
                       </defs>
+                      {/* Upper-Left Cyber-Aegis Interceptor Wing + Sensor Crown */}
                       <g
                         className="ks-motion-piece"
                         data-motion-piece="top"
                         fill="url(#md-motion-gradient)"
                         stroke="url(#md-edge-stroke)"
-                        strokeWidth="0.8"
+                        strokeWidth="1"
                       >
-                        <path d="M48 12L18 25V47C18 53 20 59 23 64L48 39L66 57C69 52 70 47 70 41V22L48 12Z" />
+                        <path d="M48 8L14 23V48C14 55 16.5 61.5 20.5 67L43 44.5L35 36.5L48 23.5L61 36.5L74.5 23L48 8Z" />
+                        <path d="M48 29L39.5 37.5L48 46L56.5 37.5L48 29Z" fill="#78dfad" />
                       </g>
+                      {/* Lower-Right Cyber-Aegis Containment Wing + Bastion Keel */}
                       <g
                         className="ks-motion-piece"
                         data-motion-piece="bottom"
                         fill="url(#md-motion-gradient)"
                         stroke="url(#md-edge-stroke)"
-                        strokeWidth="0.8"
+                        strokeWidth="1"
                       >
-                        <path d="M48 47L27 68C33 76 40 81 48 85C59 80 68 71 73 59L58 44L48 54V47Z" />
+                        <path d="M82 30.5L61 51.5L53 43.5L26 70.5C32 78.5 39.8 84.2 48 88C64.5 80.5 82 65.5 82 46V30.5Z" />
                       </g>
                     </svg>
                   </div>
@@ -496,7 +481,6 @@ export default function HomePage() {
                     </div>
                   </div>
                 </div>
-                <span className="ks-design-note">RULES 110152 · 110160 · 110120</span>
               </article>
 
               {/* 02 Detection Engineering (span 5) with 3D Rule Matrix Window */}
@@ -670,12 +654,6 @@ export default function HomePage() {
                   <span>Restricted APIs</span>
                 </div>
               </article>
-            </div>
-
-            <div className="ks-tool-belt ks-inview" aria-label="Full tool stack">
-              {tools.map((tool) => (
-                <span key={tool}>{tool}</span>
-              ))}
             </div>
           </div>
         </section>

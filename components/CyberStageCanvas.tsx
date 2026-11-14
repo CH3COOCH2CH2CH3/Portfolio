@@ -3,8 +3,6 @@
 import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 
-let introHasPlayedInMemory = false;
-
 interface Vec3 {
   x: number;
   y: number;
@@ -115,8 +113,9 @@ export function CyberStageCanvas() {
   const railDepthPctRef = useRef<HTMLSpanElement | null>(null);
   const railSectionLabelRef = useRef<HTMLSpanElement | null>(null);
   const railCoordsRef = useRef<HTMLSpanElement | null>(null);
+  const hasPlayedRef = useRef<boolean>(false);
 
-  const [showPreloader, setShowPreloader] = useState<boolean>(() => !introHasPlayedInMemory && isHome);
+  const [showPreloader, setShowPreloader] = useState<boolean>(() => isHome);
   const [activeSectionId, setActiveSectionId] = useState<string>(waypoints[0].id);
 
   useEffect(() => {
@@ -145,7 +144,7 @@ export function CyberStageCanvas() {
     };
 
     const finishIntroImmediately = () => {
-      introHasPlayedInMemory = true;
+      hasPlayedRef.current = true;
       document.body.classList.remove("ks-intro-active");
       heroMorphComplete = true;
       heroMorphFinishTime = performance.now();
@@ -153,7 +152,7 @@ export function CyberStageCanvas() {
       setShowPreloader(false);
     };
 
-    if (!isHome || introHasPlayedInMemory || reducedMotion || !preloader) {
+    if (!isHome || hasPlayedRef.current || reducedMotion || !preloader) {
       finishIntroImmediately();
     } else {
       document.body.classList.add("ks-intro-active");
@@ -184,7 +183,7 @@ export function CyberStageCanvas() {
         diveTimer = window.setTimeout(triggerDiveStart, 340);
 
         dockTimer = window.setTimeout(() => {
-          introHasPlayedInMemory = true;
+          hasPlayedRef.current = true;
           document.body.classList.remove("ks-intro-active");
           preloader.classList.add("is-docked");
           heroMorphComplete = true;
@@ -196,7 +195,7 @@ export function CyberStageCanvas() {
         }, 840);
       };
 
-      morphTimer = window.setTimeout(startSharedElementMorph, 1720);
+      morphTimer = window.setTimeout(startSharedElementMorph, 1760);
     }
 
     const onKeyDown = (e: KeyboardEvent) => {
@@ -1596,47 +1595,64 @@ export function CyberStageCanvas() {
                 </div>
               </div>
 
-              {/* Autonomous Laser Interceptor Beam Unlocking the Vault */}
+              {/* Autonomous 3D Cyber-Key Probe & Laser Interceptor Unlocking the SOC Vault */}
               <svg
                 className="ks-vault-scanner"
                 fill="none"
-                viewBox="0 0 200 200"
+                viewBox="0 0 220 220"
                 xmlns="http://www.w3.org/2000/svg"
               >
                 <defs>
                   <linearGradient id="md-scanner-grad" x1="0" x2="1" y1="0" y2="1">
-                    <stop offset="0%" stopColor="#d8f6ff" stopOpacity="0.95" />
-                    <stop offset="50%" stopColor="#63d5ff" stopOpacity="0.9" />
+                    <stop offset="0%" stopColor="#dff9ff" stopOpacity="0.98" />
+                    <stop offset="52%" stopColor="#63d5ff" stopOpacity="0.94" />
                     <stop offset="100%" stopColor="#78dfad" stopOpacity="0.95" />
                   </linearGradient>
+                  <radialGradient id="md-scanner-flare" cx="0.34" cy="0.24" r="0.45">
+                    <stop offset="0%" stopColor="#78dfad" stopOpacity="0.88" />
+                    <stop offset="45%" stopColor="#63d5ff" stopOpacity="0.36" />
+                    <stop offset="100%" stopColor="#63d5ff" stopOpacity="0" />
+                  </radialGradient>
                 </defs>
+                {/* Laser Key Lock-On Flare at Vault Seam */}
+                <circle cx="72" cy="48" r="36" fill="url(#md-scanner-flare)" />
                 <circle
                   className="ks-scanner-ring"
-                  cx="100"
-                  cy="100"
-                  r="34"
+                  cx="72"
+                  cy="48"
+                  r="24"
                   stroke="#78dfad"
                   strokeWidth="1.6"
                   strokeDasharray="6 4"
                 />
-                <circle
-                  cx="100"
-                  cy="100"
-                  r="18"
-                  stroke="#63d5ff"
-                  strokeWidth="1.4"
-                />
+                {/* High-Energy Cryptographic Laser Beam */}
                 <path
-                  d="M100 50V74M100 126V150M50 100H74M126 100H150"
-                  stroke="url(#md-scanner-grad)"
+                  d="M72 48L108 92M64 48H80M72 40V56"
+                  stroke="#ffffff"
                   strokeWidth="2.2"
                   strokeLinecap="round"
                 />
-                <circle cx="100" cy="100" r="5" fill="#78dfad" />
+                {/* Robotic Cyber-Key Probe Chassis */}
+                <path
+                  d="M96 82L122 72L166 128L182 176L146 186L114 142L88 104Z"
+                  fill="rgba(12, 22, 40, 0.92)"
+                  stroke="url(#md-scanner-grad)"
+                  strokeWidth="2.2"
+                  strokeLinejoin="round"
+                />
+                <path
+                  d="M108 92L146 144M122 86L158 134"
+                  stroke="#63d5ff"
+                  strokeOpacity="0.7"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                />
+                <circle cx="72" cy="48" r="5.5" fill="#ffffff" />
+                <circle cx="108" cy="92" r="4" fill="#78dfad" />
               </svg>
             </div>
 
-            {/* Shared-Element 3D Split-Shield Frame -> Flies & Docks into Hero Construct */}
+            {/* Shared-Element 3D Split-Aegis Frame -> Flies & Docks into Hero Construct */}
             <div className="ks-preload-frame" id="ks-preload-frame" ref={preloadFrameRef}>
               <span className="ks-preload-inner-ring">
                 <i className="ks-preload-mint-dot" />
@@ -1648,30 +1664,31 @@ export function CyberStageCanvas() {
               >
                 <defs>
                   <linearGradient id="md-preload-grad" x1="0" x2="1" y1="0" y2="1">
-                    <stop stopColor="#63d5ff" />
-                    <stop offset="0.55" stopColor="#78dfad" />
-                    <stop offset="1" stopColor="#dff9ff" />
+                    <stop offset="0%" stopColor="#dff9ff" />
+                    <stop offset="48%" stopColor="#63d5ff" />
+                    <stop offset="100%" stopColor="#78dfad" />
                   </linearGradient>
                   <linearGradient id="md-preload-stroke" x1="0" x2="1" y1="1" y2="0">
-                    <stop stopColor="#ffffff" stopOpacity="0.8" />
-                    <stop offset="1" stopColor="#63d5ff" stopOpacity="0.2" />
+                    <stop stopColor="#ffffff" stopOpacity="0.92" />
+                    <stop offset="1" stopColor="#63d5ff" stopOpacity="0.35" />
                   </linearGradient>
                 </defs>
                 <g
                   className="ks-preload-piece ks-preload-piece--top"
                   fill="url(#md-preload-grad)"
                   stroke="url(#md-preload-stroke)"
-                  strokeWidth="0.8"
+                  strokeWidth="1"
                 >
-                  <path d="M48 12L18 25V47C18 53 20 59 23 64L48 39L66 57C69 52 70 47 70 41V22L48 12Z" />
+                  <path d="M48 8L14 23V48C14 55 16.5 61.5 20.5 67L43 44.5L35 36.5L48 23.5L61 36.5L74.5 23L48 8Z" />
+                  <path d="M48 29L39.5 37.5L48 46L56.5 37.5L48 29Z" fill="#78dfad" />
                 </g>
                 <g
                   className="ks-preload-piece ks-preload-piece--bottom"
                   fill="url(#md-preload-grad)"
                   stroke="url(#md-preload-stroke)"
-                  strokeWidth="0.8"
+                  strokeWidth="1"
                 >
-                  <path d="M48 47L27 68C33 76 40 81 48 85C59 80 68 71 73 59L58 44L48 54V47Z" />
+                  <path d="M82 30.5L61 51.5L53 43.5L26 70.5C32 78.5 39.8 84.2 48 88C64.5 80.5 82 65.5 82 46V30.5Z" />
                 </g>
               </svg>
             </div>
