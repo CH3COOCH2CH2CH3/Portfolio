@@ -142,26 +142,61 @@ export default function HomePage() {
                           <stop offset="1" stopColor="#63d5ff" stopOpacity="0.35" />
                         </linearGradient>
                       </defs>
-                      {/* Upper-Left Cyber-Aegis Interceptor Wing + Sensor Crown */}
+                      {/* Inner Energy Pulse Ring & Diagonal Laser Seam (Revealed as Blades Split) */}
+                      <circle
+                        className="ks-motion-pulse-ring"
+                        cx="48"
+                        cy="44"
+                        fill="none"
+                        r="22"
+                        stroke="#78dfad"
+                        strokeDasharray="5 4"
+                        strokeOpacity="0.65"
+                        strokeWidth="1.2"
+                      />
+                      <line
+                        className="ks-motion-laser-seam"
+                        stroke="#78dfad"
+                        strokeLinecap="round"
+                        strokeOpacity="0.85"
+                        strokeWidth="1.6"
+                        x1="20"
+                        x2="78"
+                        y1="72"
+                        y2="14"
+                      />
+                      {/* Upper-Left Cyber-Aegis Interceptor Wing */}
                       <g
-                        className="ks-motion-piece"
+                        className="ks-motion-piece ks-motion-piece--top"
                         data-motion-piece="top"
                         fill="url(#md-motion-gradient)"
                         stroke="url(#md-edge-stroke)"
                         strokeWidth="1"
                       >
                         <path d="M48 8L14 23V48C14 55 16.5 61.5 20.5 67L43 44.5L35 36.5L48 23.5L61 36.5L74.5 23L48 8Z" />
-                        <path d="M48 29L39.5 37.5L48 46L56.5 37.5L48 29Z" fill="#78dfad" />
                       </g>
                       {/* Lower-Right Cyber-Aegis Containment Wing + Bastion Keel */}
                       <g
-                        className="ks-motion-piece"
+                        className="ks-motion-piece ks-motion-piece--bottom"
                         data-motion-piece="bottom"
                         fill="url(#md-motion-gradient)"
                         stroke="url(#md-edge-stroke)"
                         strokeWidth="1"
                       >
                         <path d="M82 30.5L61 51.5L53 43.5L26 70.5C32 78.5 39.8 84.2 48 88C64.5 80.5 82 65.5 82 46V30.5Z" />
+                      </g>
+                      {/* Autonomous Spinning & Pulsing Emerald Telemetry Core */}
+                      <g
+                        className="ks-motion-piece ks-motion-piece--core"
+                        data-motion-piece="core"
+                      >
+                        <path
+                          d="M48 28.5L39 37.5L48 46.5L57 37.5L48 28.5Z"
+                          fill="#78dfad"
+                          stroke="#ffffff"
+                          strokeWidth="1.1"
+                        />
+                        <circle cx="48" cy="37.5" fill="#ffffff" r="2.4" />
                       </g>
                     </svg>
                   </div>

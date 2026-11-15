@@ -11,7 +11,7 @@ export function MotionEffects() {
   const pathname = usePathname();
 
   useEffect(() => {
-    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const reducedMotion = false;
     const panels = Array.from(
       document.querySelectorAll<HTMLElement>(".ks-inview, .reveal-item")
     );

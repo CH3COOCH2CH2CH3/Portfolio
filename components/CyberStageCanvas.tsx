@@ -113,29 +113,21 @@ export function CyberStageCanvas() {
   const railDepthPctRef = useRef<HTMLSpanElement | null>(null);
   const railSectionLabelRef = useRef<HTMLSpanElement | null>(null);
   const railCoordsRef = useRef<HTMLSpanElement | null>(null);
-  const hasPlayedRef = useRef<boolean>(false);
 
-  const [showPreloader, setShowPreloader] = useState<boolean>(() => isHome);
   const [activeSectionId, setActiveSectionId] = useState<string>(waypoints[0].id);
 
   useEffect(() => {
-    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const preloader = preloaderRef.current;
     const preloadFrame = preloadFrameRef.current;
-    const stage = document.querySelector<HTMLElement>(".ks-hero-stage");
-    const card = stage?.querySelector<HTMLElement>("[data-hero-tilt]");
-    const upper = stage?.querySelector<HTMLElement>('[data-motion-piece="top"]');
-    const lower = stage?.querySelector<HTMLElement>('[data-motion-piece="bottom"]');
-    const depthLayers = stage ? Array.from(stage.querySelectorAll<HTMLElement>("[data-depth]")) : [];
 
     let diveStartTime = 0;
     let diveStarted = false;
-    let heroMorphComplete = false;
-    let heroMorphFinishTime = 0;
+    let isDockingFlight = false;
+    let heroMorphFinishTime = performance.now();
     let morphTimer = 0;
     let diveTimer = 0;
     let dockTimer = 0;
-    let removeTimer = 0;
+    let hideTimer = 0;
 
     const triggerDiveStart = () => {
       if (diveStarted) return;
@@ -144,18 +136,25 @@ export function CyberStageCanvas() {
     };
 
     const finishIntroImmediately = () => {
-      hasPlayedRef.current = true;
+      isDockingFlight = false;
       document.body.classList.remove("ks-intro-active");
-      heroMorphComplete = true;
+      if (preloader) {
+        preloader.classList.remove("is-morphing");
+        preloader.classList.add("is-docked", "is-hidden");
+      }
       heroMorphFinishTime = performance.now();
       triggerDiveStart();
-      setShowPreloader(false);
     };
 
-    if (!isHome || hasPlayedRef.current || reducedMotion || !preloader) {
+    if (!isHome || !preloader) {
       finishIntroImmediately();
     } else {
+      // Reset and force-replay the 3D SOC Vault Intro on every load & HMR update
       document.body.classList.add("ks-intro-active");
+      preloader.classList.remove("is-morphing", "is-docked", "is-hidden");
+      if (preloadFrame) {
+        preloadFrame.style.transform = "";
+      }
 
       const startSharedElementMorph = () => {
         if (!preloader) {
@@ -163,14 +162,13 @@ export function CyberStageCanvas() {
           return;
         }
 
-        if (upper && lower) {
-          upper.style.transform = "translate(0px, 0px) rotate(0deg)";
-          lower.style.transform = "translate(0px, 0px) rotate(0deg)";
-        }
+        isDockingFlight = true;
+        const stageEl = document.querySelector<HTMLElement>(".ks-hero-stage");
+        const cardEl = stageEl?.querySelector<HTMLElement>("[data-hero-tilt]");
 
-        if (preloadFrame && card && (window.scrollY || 0) < 220) {
+        if (preloadFrame && cardEl && (window.scrollY || 0) < 260) {
           const r1 = preloadFrame.getBoundingClientRect();
-          const r2 = card.getBoundingClientRect();
+          const r2 = cardEl.getBoundingClientRect();
           if (r1.width > 0 && r2.width > 0) {
             const dx = r2.left + r2.width * 0.5 - (r1.left + r1.width * 0.5);
             const dy = r2.top + r2.height * 0.5 - (r1.top + r1.height * 0.5);
@@ -180,30 +178,29 @@ export function CyberStageCanvas() {
         }
 
         preloader.classList.add("is-morphing");
-        diveTimer = window.setTimeout(triggerDiveStart, 340);
+        diveTimer = window.setTimeout(triggerDiveStart, 320);
 
         dockTimer = window.setTimeout(() => {
-          hasPlayedRef.current = true;
+          isDockingFlight = false;
           document.body.classList.remove("ks-intro-active");
           preloader.classList.add("is-docked");
-          heroMorphComplete = true;
           heroMorphFinishTime = performance.now();
 
-          removeTimer = window.setTimeout(() => {
-            setShowPreloader(false);
+          hideTimer = window.setTimeout(() => {
+            preloader.classList.add("is-hidden");
           }, 260);
-        }, 840);
+        }, 860);
       };
 
-      morphTimer = window.setTimeout(startSharedElementMorph, 1760);
+      morphTimer = window.setTimeout(startSharedElementMorph, 2050);
     }
 
     const onKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape" && !heroMorphComplete) {
+      if (e.key === "Escape") {
         window.clearTimeout(morphTimer);
         window.clearTimeout(diveTimer);
         window.clearTimeout(dockTimer);
-        window.clearTimeout(removeTimer);
+        window.clearTimeout(hideTimer);
         finishIntroImmediately();
       }
     };
@@ -231,63 +228,73 @@ export function CyberStageCanvas() {
       if (el) secObs.observe(el);
     });
 
-    // Part 1: Hero 3D Construct & Multi-Plane Parallax
-    const period = 3400;
+    // Part 1: Always-On Autonomous Hero 3D Construct & Multi-Plane Parallax
+    const period = 2800;
     const smoothstep = (v: number) => {
       const x = Math.max(0, Math.min(1, v));
       return x * x * (3 - 2 * x);
     };
     const timeline = (time: number) => {
       const p = (((time % period) + period) % period) / period;
-      if (p < 0.12) return 0;
-      if (p < 0.38) return smoothstep((p - 0.12) / 0.26);
-      if (p < 0.65) return 1;
-      if (p < 0.91) return 1 - smoothstep((p - 0.65) / 0.26);
+      if (p < 0.1) return 0;
+      if (p < 0.38) return smoothstep((p - 0.1) / 0.28);
+      if (p < 0.64) return 1;
+      if (p < 0.92) return 1 - smoothstep((p - 0.64) / 0.28);
       return 0;
     };
 
     let heroSplit = 0;
-    let heroTargetX = 0;
-    let heroTargetY = 0;
+    let pointerTiltX = 0;
+    let pointerTiltY = 0;
     let heroCurX = 0;
     let heroCurY = 0;
 
     const onStagePointerMove = (event: PointerEvent) => {
-      if (!stage || event.pointerType === "touch") return;
-      const r = stage.getBoundingClientRect();
+      if (event.pointerType === "touch") return;
+      const stageEl = document.querySelector<HTMLElement>(".ks-hero-stage");
+      if (!stageEl) return;
+      const r = stageEl.getBoundingClientRect();
       if (r.bottom < -100 || r.top > window.innerHeight + 100) return;
       const cx = r.left + r.width / 2;
       const cy = r.top + r.height / 2;
-      heroTargetX = Math.max(-10, Math.min(10, ((event.clientX - cx) / (r.width / 2)) * 9));
-      heroTargetY = Math.max(-9, Math.min(9, ((cy - event.clientY) / (r.height / 2)) * 8));
+      pointerTiltX = Math.max(-10, Math.min(10, ((event.clientX - cx) / (r.width / 2)) * 9));
+      pointerTiltY = Math.max(-9, Math.min(9, ((cy - event.clientY) / (r.height / 2)) * 8));
     };
 
-    if (stage) {
-      window.addEventListener("pointermove", onStagePointerMove, { passive: true });
-    }
+    window.addEventListener("pointermove", onStagePointerMove, { passive: true });
 
     function updateHeroConstruct(ts: number, dt: number) {
-      if (!stage || !card || !upper || !lower || !heroMorphComplete) return;
-      const lerpFactor = 1 - Math.exp(-dt / 105);
+      const stageEl = document.querySelector<HTMLElement>(".ks-hero-stage");
+      if (!stageEl) return;
+      const cardEl = stageEl.querySelector<HTMLElement>("[data-hero-tilt]");
+      if (!cardEl) return;
+
+      const lerpFactor = 1 - Math.exp(-dt / 95);
       const localElapsed = Math.max(0, ts - heroMorphFinishTime);
-      const target = timeline(localElapsed);
-      heroSplit += (target - heroSplit) * lerpFactor;
-      heroCurX += (heroTargetX - heroCurX) * lerpFactor;
-      heroCurY += (heroTargetY - heroCurY) * lerpFactor;
+      const targetSplit = isDockingFlight ? 0 : timeline(localElapsed);
+      heroSplit += (targetSplit - heroSplit) * lerpFactor;
 
-      upper.style.transform = `translate(${-28 * heroSplit}px, ${-20 * heroSplit}px) rotate(${-14 * heroSplit}deg)`;
-      lower.style.transform = `translate(${28 * heroSplit}px, ${20 * heroSplit}px) rotate(${14 * heroSplit}deg)`;
-      card.style.setProperty("--ks-rx", `${heroCurY.toFixed(2)}deg`);
-      card.style.setProperty("--ks-ry", `${heroCurX.toFixed(2)}deg`);
-      stage.style.setProperty("--ks-split", heroSplit.toFixed(3));
+      // Autonomous continuous 3D gyroscopic wave (runs automatically even without mouse movement)
+      const autoTiltX = Math.sin(ts * 0.0022) * 8.5;
+      const autoTiltY = Math.cos(ts * 0.0017) * 7.5;
+      const totalTargetX = Math.max(-14, Math.min(14, autoTiltX + pointerTiltX));
+      const totalTargetY = Math.max(-13, Math.min(13, autoTiltY + pointerTiltY));
 
-      for (const layer of depthLayers) {
+      heroCurX += (totalTargetX - heroCurX) * lerpFactor;
+      heroCurY += (totalTargetY - heroCurY) * lerpFactor;
+
+      cardEl.style.setProperty("--ks-rx", `${heroCurY.toFixed(2)}deg`);
+      cardEl.style.setProperty("--ks-ry", `${heroCurX.toFixed(2)}deg`);
+      stageEl.style.setProperty("--ks-split", heroSplit.toFixed(3));
+
+      const depthLayers = stageEl.querySelectorAll<HTMLElement>("[data-depth]");
+      depthLayers.forEach((layer) => {
         const depth = parseFloat(layer.dataset.depth || "0");
-        const px = heroCurX * depth * 2.4;
-        const py = -heroCurY * depth * 2.4;
+        const px = heroCurX * depth * 2.6;
+        const py = -heroCurY * depth * 2.6;
         layer.style.setProperty("--dx", `${px.toFixed(2)}px`);
         layer.style.setProperty("--dy", `${py.toFixed(2)}px`);
-      }
+      });
     }
 
     // Part 2: Full-Viewport 3D Cyber-Sentinel & Horizon Defense Mesh
@@ -1527,11 +1534,9 @@ export function CyberStageCanvas() {
       lastTs = ts;
 
       updateHeroConstruct(ts, dt);
-      if (!reducedMotion) {
-        updateSentinelKinematics(ts, dt);
-        renderScene(ts);
-        rafId = window.requestAnimationFrame(tick);
-      }
+      updateSentinelKinematics(ts, dt);
+      renderScene(ts);
+      rafId = window.requestAnimationFrame(tick);
     };
 
     rafId = window.requestAnimationFrame(tick);
@@ -1540,7 +1545,7 @@ export function CyberStageCanvas() {
       window.clearTimeout(morphTimer);
       window.clearTimeout(diveTimer);
       window.clearTimeout(dockTimer);
-      window.clearTimeout(removeTimer);
+      window.clearTimeout(hideTimer);
       window.removeEventListener("keydown", onKeyDown);
       window.removeEventListener("pointermove", onStagePointerMove);
       window.removeEventListener("pointermove", onGlobalPointerMove);
@@ -1553,7 +1558,7 @@ export function CyberStageCanvas() {
 
   return (
     <>
-      {showPreloader && (
+      {isHome && (
         <div aria-hidden="true" className="ks-preloader" id="ks-preloader" ref={preloaderRef}>
           <div className="ks-preload-backdrop">
             <div className="ks-preload-ambient" />
